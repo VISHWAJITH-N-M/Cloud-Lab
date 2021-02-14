@@ -1,0 +1,95 @@
+<resources>
+    <string name="app_name">CloudLab</string>
+    <string-array name="department">
+        <item>-Department-</item>
+        <item>Aeronautical Engineering</item>
+        <item>Agriculture Engineering</item>
+        <item>Artificial Intelligence and Data Science</item>
+        <item>Automobile Engineering</item>
+        <item>Biomedical Engineering</item>
+        <item>Biotechnology</item>
+        <item>Civil Engineering</item>
+        <item>Computer Science and Business Systems</item>
+        <item>Computer Science and Engineering</item>
+        <item>Computer Technology</item>
+        <item>Electrical and Electronics Engineering</item>
+        <item>Electronics and Communication Engineering</item>
+        <item>Electronics and Instrumentation Engineering</item>
+        <item>Fashion Technology</item>
+        <item>Food Technology</item>
+        <item>Information Science and Engineering</item>
+        <item>Information Technology</item>
+        <item>Mechanical Engineering</item>
+        <item>Mechatronics</item>
+        <item>Textile Technology</item>
+
+
+    </string-array>
+    <string-array name="Contest_mode">
+        <item>-Contest Mode-</item>
+        <item>Online Mode</item>
+        <item>Offline Mode</item>
+    </string-array>
+
+    <string-array name="odtype">
+        <item>Select OD type</item>
+        <item>Internal OD</item>
+        <item>External OD</item>
+    </string-array>
+
+    <string-array name="Contest_Prize">
+        <item>-Prize Won-</item>
+        <item>FIRST (I)</item>
+        <item>SECOND (II)</item>
+        <item>THIRD (III)</item>
+        <item>PARTICIPATION</item>
+        <item>SPECIAL PRIZE</item>
+
+    </string-array>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="to">To</string>
+    <string name="from">From</string>
+    <string name="activity_number">Activity Number</string>
+    <string name="generate_proof">Generate Proof</string>
+    <string name="mentor_details">Mentor Details</string>
+    <string name="event_name">Event name</string>
+    <string name="project_title">Project Title</string>
+    <string name="event_details">Event Details</string>
+    <string name="ssig_number">SSIG number</string>
+    <string name="roll_no">Roll no.</string>
+    <string name="on_duty">On Duty</string>
+    <string name="mail">Mail</string>
+    <string name="student_details">Student Details</string>
+    <string name="onduty_proof_generator">OnDuty Proof Generator</string>
+    <string name="name">Name</string>
+    <string name="claim_reward_points">Claim Reward Points</string>
+    <string name="submit_details">Submit Details</string>
+    <string name="completed_on">Completed on</string>
+    <string name="registered_on">Registered on</string>
+    <string name="done">Done !</string>
+    <string name="your_data_is_updated_in_database">Your data is updated in database .!</string>
+    <string name="app_settings">App Settings</string>
+    <string name="help">Help</string>
+    <string name="check_for_update">Check for Update</string>
+    <string name="todo">TODO</string>
+    <string name="app_notifications">App Notifications</string>
+    <string name="invite_friends">Invite Friends</string>
+    <string name="DarkGreen">#579A28</string>
+
+
+</resources>

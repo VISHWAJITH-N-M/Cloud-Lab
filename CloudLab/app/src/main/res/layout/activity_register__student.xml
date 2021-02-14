@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:forceDarkAllowed="false"
+    android:scrollbars="none"
+    tools:context=".Register_Student">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/white">
+
+            <ImageView
+                android:id="@+id/imageView17"
+                android:layout_width="match_parent"
+                android:layout_height="330dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/enrollment" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nb"
+                android:text="Cloud Lab enrollment"
+                android:textColor="#0099FF"
+                android:textSize="25dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView17"
+                app:layout_constraintVertical_bias="0.01" />
+
+            <ImageView
+                android:id="@+id/imageView28"
+                android:layout_width="380dp"
+                android:layout_height="330dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:drawablePadding="5dp"
+                android:fontFamily="@font/nb"
+                android:text="Student Details"
+                android:textColor="#0099FF"
+                android:textSize="15dp"
+                app:layout_constraintStart_toStartOf="@+id/name"
+                app:layout_constraintTop_toTopOf="@+id/imageView28" />
+
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="335dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_et"
+                android:drawableStart="@drawable/custom_name"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/nr"
+                android:hint="Name"
+                android:inputType="textPersonName"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView28"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/imageView28"
+                app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+            <EditText
+                android:id="@+id/mail"
+                android:layout_width="335dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_et"
+                android:drawableStart="@drawable/custom_mail"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/nr"
+                android:hint="Mail"
+                android:inputType="textEmailAddress"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView28"
+                app:layout_constraintStart_toStartOf="@+id/imageView28"
+                app:layout_constraintTop_toBottomOf="@+id/name" />
+
+            <EditText
+                android:id="@+id/roll"
+                android:layout_width="163dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/custom_et"
+                android:drawableStart="@drawable/custom_id"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/nr"
+                android:hint="Roll no."
+                android:inputType="text"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView28"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/mail"
+                app:layout_constraintTop_toBottomOf="@+id/mail" />
+
+            <Spinner
+                android:id="@+id/dept"
+                android:layout_width="335dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_et"
+                android:entries="@array/department"
+                android:textAlignment="center"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView28"
+                app:layout_constraintStart_toStartOf="@+id/imageView28"
+                app:layout_constraintTop_toBottomOf="@+id/roll" />
+
+            <EditText
+                android:id="@+id/num"
+                android:layout_width="163dp"
+                android:layout_height="60dp"
+                android:background="@drawable/custom_et"
+                android:drawableStart="@drawable/custom_phone"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/nr"
+                android:hint="Phone"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:digits = "1234567890"
+                android:textSize="16dp"
+                app:layout_constraintEnd_toEndOf="@+id/mail"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/roll"
+                app:layout_constraintTop_toTopOf="@+id/roll" />
+
+            <Button
+                android:id="@+id/register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/register_buttons"
+                android:fontFamily="@font/nb"
+                android:padding="10dp"
+                android:text="Submit Details"
+                android:textColor="#FFFFFF"
+                android:textSize="15dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView28"
+                app:layout_constraintStart_toStartOf="@+id/imageView28"
+                app:layout_constraintTop_toBottomOf="@+id/imageView28" />
+
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/gif"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/donegif"
+                app:layout_constraintBottom_toBottomOf="@+id/register"
+                app:layout_constraintEnd_toEndOf="@+id/register"
+                app:layout_constraintStart_toStartOf="@+id/register"
+                app:layout_constraintTop_toTopOf="@+id/register" />
+
+            <ImageView
+                android:id="@+id/footer"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/tree1"
+                android:textSize="18dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/register"
+                app:layout_constraintVertical_bias="1.0" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</ScrollView>

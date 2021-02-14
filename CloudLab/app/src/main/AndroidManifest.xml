@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.cloudlab">
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <supports-screens android:smallScreens="false"
+        android:normalScreens="true"
+        android:largeScreens="false"
+        android:xlargeScreens="false"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/logo2"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/logo2_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+        <activity android:name=".dialog2" android:screenOrientation="portrait"/>
+        <activity android:name=".odproof_response" android:screenOrientation="portrait"/>
+        <activity android:name=".Settings" android:screenOrientation="portrait"/>
+        <activity android:name=".Odproof_generate" android:screenOrientation="portrait"/>
+        <activity android:name=".registeration_confirm" android:screenOrientation="portrait"/>
+        <activity android:name=".Contact_Details" android:screenOrientation="portrait"/>
+        <activity android:name=".Feedback" android:screenOrientation="portrait"/>
+        <activity android:name=".Attended_Events" android:screenOrientation="portrait"/>
+        <activity android:name=".Register_Student" android:screenOrientation="portrait"/>
+        <activity android:name=".About_Cloud" android:screenOrientation="portrait"/>
+        <activity android:name=".Mainpage" android:screenOrientation="portrait" />
+        <activity android:name=".LoaderPage" android:screenOrientation="portrait"/>
+        <activity android:name=".Information" android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity" android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+    </application>
+
+
+</manifest>
