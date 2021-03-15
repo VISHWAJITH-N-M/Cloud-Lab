@@ -78,7 +78,7 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/register_buttons"
         android:fontFamily="@font/nb"
         android:padding="15dp"

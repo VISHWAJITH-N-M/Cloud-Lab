@@ -2,6 +2,7 @@ package com.example.cloudlab;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,6 +42,7 @@ public class Mainpage extends AppCompatActivity {
     public Button join,od,rp,bit,settings,feedback,contact,web;
     List<String> slider_links = new ArrayList<>();
     List<String> slider2_links = new ArrayList<>();
+    List<Bitmap> slider = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

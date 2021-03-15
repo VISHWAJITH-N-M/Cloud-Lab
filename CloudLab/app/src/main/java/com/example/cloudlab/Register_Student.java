@@ -216,11 +216,7 @@ public class Register_Student extends AppCompatActivity implements AdapterView.O
                                 @Override
                                 public void run() {
                                     Textfieldclear();
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("s_name", name);
-                                    bundle.putString("s_rollno", rollno);
-                                    Intent intent = new Intent(Register_Student.this, registeration_confirm.class);
-                                    intent.putExtras(bundle);
+                                    Intent intent = new Intent(Register_Student.this,Mainpage.class);
                                     startActivity(intent);
 
                                 }

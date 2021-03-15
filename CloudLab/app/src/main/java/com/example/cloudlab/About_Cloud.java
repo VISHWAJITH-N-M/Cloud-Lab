@@ -3,6 +3,8 @@ package com.example.cloudlab;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.Window;
+import android.webkit.WebChromeClient;
 import android.webkit.WebViewClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -29,5 +31,6 @@ public class About_Cloud extends AppCompatActivity {
         i1.height = (int) (getResources().getDisplayMetrics().heightPixels * 0.14);
         i2.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.28);
         i2.height = (int) (getResources().getDisplayMetrics().heightPixels * 0.125);
+
     }
 }

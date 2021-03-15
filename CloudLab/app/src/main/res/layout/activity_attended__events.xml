@@ -275,19 +275,19 @@
                 android:layout_width="163dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="10dp"
+                android:autofillHints=""
                 android:background="@drawable/custom_et"
-                android:drawableStart="@drawable/custom_groups"
+                android:digits="1234567890"
+                android:drawableStart="@drawable/custom_doc"
                 android:drawablePadding="8dp"
-                android:digits = "1234567890"
-                android:hint="@string/ssig_number"
                 android:fontFamily="@font/nr"
+                android:hint="DOC id"
                 android:inputType="number"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
                 android:textSize="15dp"
                 app:layout_constraintEnd_toEndOf="@+id/mail"
-                app:layout_constraintTop_toBottomOf="@+id/mail"
-                android:autofillHints="" />
+                app:layout_constraintTop_toBottomOf="@+id/mail" />
 
             <Button
                 android:id="@+id/contest_register"

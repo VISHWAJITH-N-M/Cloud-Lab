@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatDelegate;
 public class MainActivity extends AppCompatActivity {
     private Button button;
     TextView a;
-    String prevStarted = "prevStarted";
 
     private int STORAGE_PERMISSION_CODE = 1;
     @Override
@@ -24,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-            SharedPreferences preferences = getSharedPreferences("PREFERENCE",MODE_PRIVATE);
+            final SharedPreferences preferences = getSharedPreferences("PREFERENCE",MODE_PRIVATE);
             String FirstTime = preferences.getString("First","");
             if (FirstTime.equals("Yes"))
             {
@@ -32,11 +31,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, LoaderPage.class);
                 startActivity(intent);
                 finish();
-
-            }else {
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("First", "Yes");
-                editor.apply();
 
             }
             setContentView(R.layout.activity_main);
@@ -52,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("First", "Yes");
+                    editor.apply();
                     opengetstarted();
                 }
             });
