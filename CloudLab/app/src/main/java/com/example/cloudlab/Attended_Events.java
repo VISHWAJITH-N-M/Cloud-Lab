@@ -36,6 +36,7 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.firebase.client.Firebase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -53,7 +54,7 @@ import java.util.Timer;
 
 import pl.droidsonroids.gif.GifImageView;
 
-public class Attended_Events extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class Attended_Events extends AppCompatActivity {
 
     EditText cname, tname, ptitle, sname, srollno, semail;
     TextView enddate, startdate;
@@ -66,7 +67,9 @@ public class Attended_Events extends AppCompatActivity implements AdapterView.On
     Dialog dialog;
     Button event_register, refresh;
     Spinner cmode, sprize, sdept;
-    List<String> Department;
+    ArrayList<String> list;
+    ArrayAdapter <String> adapter ;
+
 
 
     @Override
@@ -79,32 +82,41 @@ public class Attended_Events extends AppCompatActivity implements AdapterView.On
         //progressbar invisible
 
         //spinner
-
-        cmode = findViewById(R.id.contest_mode);
-        cmode.setOnItemSelectedListener(this);
-
-        sprize = findViewById(R.id.prize);
-        sprize.setOnItemSelectedListener(this);
-
         sdept = findViewById(R.id.dept);
+        list = new ArrayList<String>();
+        FirebaseDatabase.getInstance().getReference().child("department").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot data : snapshot.getChildren())
+                    list.add(data.child("dept").getValue().toString());
+                adapter.notifyDataSetChanged();
+            }
 
-        cname = (EditText)findViewById(R.id.event);
-        tname = (EditText)findViewById(R.id.ssig);
-        ptitle =(EditText) findViewById(R.id.title);
-        sname = (EditText)findViewById(R.id.name);
-        srollno = (EditText)findViewById(R.id.roll);
-        semail = (EditText)findViewById(R.id.mail);
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(Attended_Events.this, "Check your Network connection", Toast.LENGTH_SHORT).show();
+            }
+        });
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+        sdept.setAdapter(adapter);
+        cmode = findViewById(R.id.contest_mode);
+        sprize = findViewById(R.id.prize);
+
+
+        cname = (EditText) findViewById(R.id.event);
+        tname = (EditText) findViewById(R.id.ssig);
+        ptitle = (EditText) findViewById(R.id.title);
+        sname = (EditText) findViewById(R.id.name);
+        srollno = (EditText) findViewById(R.id.roll);
+        semail = (EditText) findViewById(R.id.mail);
         bg = findViewById(R.id.imageView28);
         bg1 = findViewById(R.id.imageView29);
         done = findViewById(R.id.gif);
         done.setVisibility(View.INVISIBLE);
-        //cstatus = findViewById(R.id.contest_status);
-        //scerti = findViewById(R.id.certificate_link);
-
 
         //Date Picker
 
-        startdate =findViewById(R.id.from);
+        startdate = findViewById(R.id.from);
         enddate = findViewById(R.id.to);
         String d = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault()).format(new Date());
         startdate.setText(d);
@@ -158,7 +170,7 @@ public class Attended_Events extends AppCompatActivity implements AdapterView.On
         td1.height = (int) (getResources().getDisplayMetrics().heightPixels * 0.076);
         td1.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.41);
 
-        
+
         event_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -191,128 +203,116 @@ public class Attended_Events extends AppCompatActivity implements AdapterView.On
                     c_mode = cmode.getSelectedItem().toString().trim();
                     s_prize = sprize.getSelectedItem().toString().trim();
                     b = "abcdefghijklmnopqrstuvwxyz.,~#^|$%&*!@";
-                        if(s_name.isEmpty() || s_rollno.isEmpty() || s_email.isEmpty() || t_name.isEmpty() || s_dept.equals("-Department-") || c_name.isEmpty() || p_title.isEmpty() || c_mode.equals("-Contest Mode-") || s_prize.equals("-Prize Won-"))
-                        {
-                            if(c_name.isEmpty())
+                    if (s_name.isEmpty() || s_rollno.isEmpty() || s_email.isEmpty() || t_name.isEmpty() || c_name.isEmpty() || s_dept.equals("-Department-") || p_title.isEmpty() || c_mode.equals("-Contest Mode-") || s_prize.equals("-Prize Won-")) {
+                        if (c_name.isEmpty())
                             cname.setError("Field required");
-                            if(t_name.isEmpty())
+                        if (t_name.isEmpty())
                             tname.setError("Field required");
-                            else if(tname.length() != 7)
-                                tname.setError("SSIG no. contains 7 digits");
-                            if(p_title.isEmpty())
+                        else if (tname.length() != 7)
+                            tname.setError("SSIG no. contains 7 digits");
+                        if (p_title.isEmpty())
                             ptitle.setError("Field required");
-                            if(s_name.isEmpty())
+                        if (s_name.isEmpty())
                             sname.setError("Field required");
-                            else{
-                                for (int i = 0; i < s_name.length(); i++) {
-                                    for (int j = 0; j < b.length(); j++) {
-                                        if (s_name.charAt(i) == b.charAt(j)) {
-                                            sname.setError("Avoid lower case and special characters EX: VITEL N");
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                            if(s_rollno.isEmpty())
-                            srollno.setError("Field required");
-                            else if(s_rollno.length() != 8)
-                                srollno.setError("Roll no. contains 8 characters");
-                            else{
-                                for(int i = 0;i<s_rollno.length();i++)
-                                {
-                                    for(int j = 0;j<b.length();j++)
-                                    {
-                                        if(s_rollno.charAt(i) == b.charAt(j))
-                                        {
-
-                                            srollno.setError("Avoid lower case and special characters EX: 191AB100");
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                            if(s_email.isEmpty())
-                            semail.setError("Field required");
-                            else{
-                                split = s_email.split("@");
-                                if(split.length == 1){
-
-                                    semail.setError("Enter a valid mail ID Ex:example@bitsathy.ac.in");
-                                }
-                                else if(!split[1].trim().equals("bitsathy.ac.in"))
-                                {
-
-                                    semail.setError("Enter a valid mail ID Ex:example@bitsathy.ac.in");
-                                }
-                            }
-                            TextView d = (TextView)sdept.getSelectedView();
-                            if(s_dept.equals("-Department-"))
-                            d.setError("Field required");
-                            TextView m = (TextView)cmode.getSelectedView();
-                            if(c_mode.equals("-Contest Mode-"))
-                            m.setError("Field required");
-                            TextView p = (TextView)sprize.getSelectedView();
-                            if(s_prize.equals("-Prize Won-"))
-                            p.setError("Field required");
-                        }
                         else {
-                            temp = 0;
                             for (int i = 0; i < s_name.length(); i++) {
                                 for (int j = 0; j < b.length(); j++) {
                                     if (s_name.charAt(i) == b.charAt(j)) {
-                                        temp = temp + 1;
                                         sname.setError("Avoid lower case and special characters EX: VITEL N");
                                         break;
                                     }
                                 }
                             }
-                            split = s_email.split("@");
-                            if(split.length == 1){
-                                temp = temp + 1;
-                                semail.setError("Enter a valid mail ID Ex:example@bitsathy.ac.in");
-                            }
-                            else if(!split[1].trim().equals("bitsathy.ac.in"))
-                            {
-                                temp = temp + 1;
-                                semail.setError("Enter a valid mail ID Ex:example@bitsathy.ac.in");
-                            }
-                            if(s_rollno.length() != 8) {
-                                temp = temp + 1;
-                                srollno.setError("Roll no. contains 8 characters");
-                            }
-                            else {
-                                for (int i = 0; i < s_rollno.length(); i++) {
-                                    for (int j = 0; j < b.length(); j++) {
-                                        if (s_rollno.charAt(i) == b.charAt(j)) {
-                                            temp = temp + 1;
-                                            srollno.setError("Avoid lower case and special characters EX: 191AB100");
-                                            break;
-                                        }
+                        }
+                        if (s_rollno.isEmpty())
+                            srollno.setError("Field required");
+                        else if (s_rollno.length() != 8)
+                            srollno.setError("Roll no. contains 8 characters");
+                        else {
+                            for (int i = 0; i < s_rollno.length(); i++) {
+                                for (int j = 0; j < b.length(); j++) {
+                                    if (s_rollno.charAt(i) == b.charAt(j)) {
+
+                                        srollno.setError("Avoid lower case and special characters EX: 191AB100");
+                                        break;
                                     }
                                 }
                             }
-                            if(tname.length() != 7){
-                                temp = temp + 1;
-                                tname.setError("SSIG no. contains 7 digits");
-                            }
-                            if(temp==0)
-                            {
-                                event_register.setVisibility(View.INVISIBLE);
-                                done.setVisibility(View.VISIBLE);
-                                addItemToSheet();
-                                Handler handler = new Handler();
-                                handler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Intent i = new Intent(Attended_Events.this, Mainpage.class);
-                                        startActivity(i);
-                                    }
-                                }, 1000);
-                            }
-                            else
-                                Toast.makeText(Attended_Events.this,"Form validation failed, check all fields",Toast.LENGTH_LONG).show();
-
                         }
+                        if (s_email.isEmpty())
+                            semail.setError("Field required");
+                        else {
+                            split = s_email.split("@");
+                            if (split.length == 1) {
+
+                                semail.setError("Enter a valid mail ID Ex:example@bitsathy.ac.in");
+                            } else if (!split[1].trim().equals("bitsathy.ac.in")) {
+
+                                semail.setError("Enter a valid mail ID Ex:example@bitsathy.ac.in");
+                            }
+                        }
+                        TextView d = (TextView) sdept.getSelectedView();
+                        if (s_dept.equals("-Department-"))
+                            d.setError("Field required");
+                        TextView m = (TextView) cmode.getSelectedView();
+                        if (c_mode.equals("-Contest Mode-"))
+                            m.setError("Field required");
+                        TextView p = (TextView) sprize.getSelectedView();
+                        if (s_prize.equals("-Prize Won-"))
+                            p.setError("Field required");
+                    } else {
+                        temp = 0;
+                        for (int i = 0; i < s_name.length(); i++) {
+                            for (int j = 0; j < b.length(); j++) {
+                                if (s_name.charAt(i) == b.charAt(j)) {
+                                    temp = temp + 1;
+                                    sname.setError("Avoid lower case and special characters EX: VITEL N");
+                                    break;
+                                }
+                            }
+                        }
+                        split = s_email.split("@");
+                        if (split.length == 1) {
+                            temp = temp + 1;
+                            semail.setError("Enter a valid mail ID Ex:example@bitsathy.ac.in");
+                        } else if (!split[1].trim().equals("bitsathy.ac.in")) {
+                            temp = temp + 1;
+                            semail.setError("Enter a valid mail ID Ex:example@bitsathy.ac.in");
+                        }
+                        if (s_rollno.length() != 8) {
+                            temp = temp + 1;
+                            srollno.setError("Roll no. contains 8 characters");
+                        } else {
+                            for (int i = 0; i < s_rollno.length(); i++) {
+                                for (int j = 0; j < b.length(); j++) {
+                                    if (s_rollno.charAt(i) == b.charAt(j)) {
+                                        temp = temp + 1;
+                                        srollno.setError("Avoid lower case and special characters EX: 191AB100");
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        if (tname.length() != 7) {
+                            temp = temp + 1;
+                            tname.setError("SSIG no. contains 7 digits");
+                        }
+                        if (temp == 0) {
+                            event_register.setVisibility(View.INVISIBLE);
+                            done.setVisibility(View.VISIBLE);
+                            addItemToSheet();
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Intent i = new Intent(Attended_Events.this, Mainpage.class);
+                                    startActivity(i);
+                                }
+                            }, 1000);
+                        } else
+                            Toast.makeText(Attended_Events.this, "Form validation failed, check all fields", Toast.LENGTH_LONG).show();
+
+                    }
 //
 
                 }
@@ -343,7 +343,7 @@ public class Attended_Events extends AppCompatActivity implements AdapterView.On
 
                                 startdate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
                                 s_date = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
-                                System.out.println("sdate : "+s_date);
+                                System.out.println("sdate : " + s_date);
                             }
                         }, year, month, date);
                 datePickerDialog.show();
@@ -366,12 +366,12 @@ public class Attended_Events extends AppCompatActivity implements AdapterView.On
                                                   int monthOfYear, int dayOfMonth) {
 
                                 enddate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                                e_date=enddate.getText().toString().trim();
-                                if(e_date=="")
-                                { e_date = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+                                e_date = enddate.getText().toString().trim();
+                                if (e_date == "") {
+                                    e_date = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
 
                                 }
-                                System.out.println("edate : "+e_date);
+                                System.out.println("edate : " + e_date);
 
 
                             }
@@ -384,23 +384,6 @@ public class Attended_Events extends AppCompatActivity implements AdapterView.On
         // end of main function
 
     }
-
-
-    //  Spinner
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        s_dept = sdept.getSelectedItem().toString().trim();
-        c_mode = cmode.getSelectedItem().toString().trim();
-        s_prize = sprize.getSelectedItem().toString().trim();
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
-
 
     private void  addItemToSheet() {
 
@@ -450,7 +433,6 @@ System.out.println("ooutput3 : "+e_date);
                 parmas.put("prize",s_prize);
 
                 return parmas;
-
             }
         };
 
@@ -462,7 +444,6 @@ System.out.println("ooutput3 : "+e_date);
         RequestQueue queue = Volley.newRequestQueue(this);
 
         queue.add(stringRequest);
-
 
     }
 }

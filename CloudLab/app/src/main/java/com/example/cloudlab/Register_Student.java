@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -30,7 +32,12 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -38,7 +45,7 @@ import java.util.TimerTask;
 
 import pl.droidsonroids.gif.GifImageView;
 
-public class Register_Student extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class Register_Student extends AppCompatActivity {
     Button register;
     ImageView header,bg1;
     Button refresh;
@@ -47,6 +54,8 @@ public class Register_Student extends AppCompatActivity implements AdapterView.O
     String[] split;
     int temp;
     Spinner department;
+    ArrayList<String> list = new ArrayList<String>();
+    ArrayAdapter<String> adapter;
     Dialog dialog;
     Timer time;
     GifImageView done;
@@ -63,7 +72,22 @@ public class Register_Student extends AppCompatActivity implements AdapterView.O
         department = findViewById(R.id.dept);
         done = findViewById(R.id.gif);
         done.setVisibility(View.INVISIBLE);
-        department.setOnItemSelectedListener(this);
+
+        FirebaseDatabase.getInstance().getReference().child("department").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot data:snapshot.getChildren())
+                    list.add(data.child("dept").getValue().toString());
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,list);
+        department.setAdapter(adapter);
 
         dialog=new Dialog(this);
 
@@ -285,15 +309,7 @@ public class Register_Student extends AppCompatActivity implements AdapterView.O
 
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        dept = department.getSelectedItem().toString().trim();
-    }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
     public void Textfieldclear()
     {
         inputrollno.getText().clear();

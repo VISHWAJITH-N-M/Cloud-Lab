@@ -16,6 +16,7 @@ import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -26,6 +27,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -39,8 +41,13 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -51,7 +58,7 @@ import java.util.TimerTask;
 
 import pl.droidsonroids.gif.GifImageView;
 
-public class Odproof_generate extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class Odproof_generate extends AppCompatActivity {
 
 
     private static final int STORAGE_CODE = 1000;
@@ -67,6 +74,8 @@ public class Odproof_generate extends AppCompatActivity implements AdapterView.O
     Timer times;
     ImageView image,image1,image2,image3;
     Spinner dept, ODtype;
+    ArrayList<String> list = new ArrayList<String>();
+    ArrayAdapter<String> adapter ;
 
     EditText sname, srollnumber, activityid, cevent, m_name, m_mail, semail, title, ssig;
 
@@ -79,6 +88,19 @@ public class Odproof_generate extends AppCompatActivity implements AdapterView.O
         setContentView(R.layout.activity_odproof_generate);
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        FirebaseDatabase.getInstance().getReference().child("department").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot data:snapshot.getChildren())
+                    list.add(data.child("dept").getValue().toString());
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
         //Edit Text
@@ -99,11 +121,12 @@ public class Odproof_generate extends AppCompatActivity implements AdapterView.O
         done = findViewById(R.id.gif);
         done.setVisibility(View.INVISIBLE);
         dialog=new Dialog(this);
-        dept = findViewById(R.id.dept);
-        dept.setOnItemSelectedListener(this);
 
+        dept = findViewById(R.id.dept);
         ODtype = findViewById(R.id.odtype);
-        ODtype.setOnItemSelectedListener(this);
+
+        adapter =  new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,list);
+        dept.setAdapter(adapter);
 
 
         //Date Picker
@@ -487,21 +510,6 @@ public class Odproof_generate extends AppCompatActivity implements AdapterView.O
         //end main function
 
     }
-
-
-    //Drop down
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        s_dept = dept.getSelectedItem().toString().trim();
-        od_type = ODtype.getSelectedItem().toString().trim();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
-
 
 
     //Add details to sheet
